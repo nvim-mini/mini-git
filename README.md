@@ -1,8 +1,8 @@
-<div align="center"> <img src="https://github.com/nvim-mini/assets/blob/main/logo-2/logo-git_readme.png" alt="mini.git"/> </div>
+<p align="center"> <img src="https://github.com/nvim-mini/assets/blob/main/logo-2/logo-git_readme.png?raw=true" alt="mini.git" style="max-width:100%;border:solid 2px"/> </p>
 
 ### Git integration
 
-See more details in [Features](#features) and [help file](doc/mini-git.txt).
+See more details in [Features](#features) and [Documentation](doc/mini-git.txt).
 
 ---
 
@@ -21,6 +21,7 @@ If you want to help this project grow but don't know where to start, check out [
 
 ## Demo
 
+<!-- Demo source: https://github.com/nvim-mini/assets/blob/main/demo/demo-git.mp4 -->
 https://github.com/nvim-mini/mini.nvim/assets/24854248/3c2b34cd-f04f-4e30-9ca4-1ff51e2d65a2
 
 **Note**: This demo uses custom `vim.notify()` from [mini.notify](https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-notify.md) and diff line number highlighting from [mini.diff](https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-diff.md).
@@ -40,11 +41,12 @@ What it doesn't do:
 
 - Replace fully featured Git client. Rule of thumb: if feature does not rely on a state of current Neovim (opened buffers, etc.), it is out of scope. For more functionality, use either ['mini.diff'](https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-diff.md) or fully featured Git client.
 
-To read more information, see these tags in help file:
-- `*:Git*`
-- `*MiniGit-examples*`
-- `*MiniGit.enable()*`
-- `*MiniGit.get_buf_data()*`
+For more information see these parts of help:
+
+- `:h :Git`
+- `:h MiniGit-examples`
+- `:h MiniGit.enable()`
+- `:h MiniGit.get_buf_data()`
 
 ## Installation
 
@@ -59,85 +61,67 @@ Here are code snippets for some common installation methods (use only one):
 
 <details>
 <summary>With <a href="https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-deps.md">mini.deps</a></summary>
-<table>
-    <thead>
-        <tr>
-            <th>Github repo</th> <th>Branch</th> <th>Code snippet</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td rowspan=2>'mini.nvim' library</td> <td>Main</td> <td rowspan=2><i>Follow recommended 'mini.deps' installation</i></td>
-        </tr>
-        <tr>
-            <td>Stable</td>
-        </tr>
-        <tr>
-            <td rowspan=2>Standalone plugin</td> <td>Main</td> <td><code>add('nvim-mini/mini-git')</code></td>
-        </tr>
-        <tr>
-            <td>Stable</td> <td><code>add({ source = 'nvim-mini/mini-git', checkout = 'stable' })</code></td>
-        </tr>
-    </tbody>
-</table>
+
+- 'mini.nvim' library:
+
+    | Branch | Code snippet                                  |
+    |--------|-----------------------------------------------|
+    | Main   | *Follow recommended ‘mini.deps’ installation* |
+    | Stable | *Follow recommended ‘mini.deps’ installation* |
+
+- Standalone plugin:
+
+    | Branch | Code snippet                                                  |
+    |--------|---------------------------------------------------------------|
+    | Main   | `add(‘nvim-mini/mini-git’)`                                   |
+    | Stable | `add({ source = ‘nvim-mini/mini-git’, checkout = ‘stable’ })` |
+
 </details>
 
 <details>
 <summary>With <a href="https://github.com/folke/lazy.nvim">folke/lazy.nvim</a></summary>
-<table>
-    <thead>
-        <tr>
-            <th>Github repo</th> <th>Branch</th> <th>Code snippet</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td rowspan=2>'mini.nvim' library</td> <td>Main</td> <td><code>{ 'nvim-mini/mini.nvim', version = false },</code></td>
-        </tr>
-        <tr>
-            <td>Stable</td> <td><code>{ 'nvim-mini/mini.nvim', version = '*' },</code></td>
-        </tr>
-        <tr>
-            <td rowspan=2>Standalone plugin</td> <td>Main</td> <td><code>{ 'nvim-mini/mini-git', version = false, main = 'mini.git' },</code></td>
-        </tr>
-        <tr>
-            <td>Stable</td> <td><code>{ 'nvim-mini/mini-git', version = '*', main = 'mini.git' },</code></td>
-        </tr>
-    </tbody>
-</table>
+
+- 'mini.nvim' library:
+
+    | Branch | Code snippet                                  |
+    |--------|-----------------------------------------------|
+    | Main   | `{ 'nvim-mini/mini.nvim', version = false },` |
+    | Stable | `{ 'nvim-mini/mini.nvim', version = '*' },`   |
+
+- Standalone plugin:
+
+    | Branch | Code snippet                                 |
+    |--------|----------------------------------------------|
+    | Main   | `{ 'nvim-mini/mini-git', version = false },` |
+    | Stable | `{ 'nvim-mini/mini-git', version = '*' },`   |
+
 </details>
 
 <details>
 <summary>With <a href="https://github.com/junegunn/vim-plug">junegunn/vim-plug</a></summary>
-<table>
-    <thead>
-        <tr>
-            <th>Github repo</th> <th>Branch</th> <th>Code snippet</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td rowspan=2>'mini.nvim' library</td> <td>Main</td> <td><code>Plug 'nvim-mini/mini.nvim'</code></td>
-        </tr>
-        <tr>
-            <td>Stable</td> <td><code>Plug 'nvim-mini/mini.nvim', { 'branch': 'stable' }</code></td>
-        </tr>
-        <tr>
-            <td rowspan=2>Standalone plugin</td> <td>Main</td> <td><code>Plug 'nvim-mini/mini-git'</code></td>
-        </tr>
-        <tr>
-            <td>Stable</td> <td><code>Plug 'nvim-mini/mini-git', { 'branch': 'stable' }</code></td>
-        </tr>
-    </tbody>
-</table>
-</details>
 
-<br>
+- 'mini.nvim' library:
+
+    | Branch | Code snippet                                         |
+    |--------|------------------------------------------------------|
+    | Main   | `Plug 'nvim-mini/mini.nvim'`                         |
+    | Stable | `Plug 'nvim-mini/mini.nvim', { 'branch': 'stable' }` |
+
+- Standalone plugin:
+
+    | Branch | Code snippet                                        |
+    |--------|-----------------------------------------------------|
+    | Main   | `Plug 'nvim-mini/mini-git'`                         |
+    | Stable | `Plug 'nvim-mini/mini-git', { 'branch': 'stable' }` |
+
+</details>
 
 **Important**: don't forget to call `require('mini.git').setup()` to enable its functionality.
 
 **Note**: if you are on Windows, there might be problems with too long file paths (like `error: unable to create file <some file name>: Filename too long`). Try doing one of the following:
+
 - Enable corresponding git global config value: `git config --system core.longpaths true`. Then try to reinstall.
+- Install plugin in other place with shorter path.
 
 ## Default config
 
