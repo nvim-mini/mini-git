@@ -1,10 +1,7 @@
 --- *mini.git* Git integration
---- *MiniGit*
 ---
 --- MIT License Copyright (c) 2024 Evgeni Chasnovski
----
---- ==============================================================================
----
+
 --- Features:
 ---
 --- - Automated tracking of Git related data: root path, status, HEAD, etc.
@@ -24,7 +21,7 @@
 ---
 --- - Replace fully featured Git client. Rule of thumb: if feature does not rely
 ---   on a state of current Neovim (opened buffers, etc.), it is out of scope.
----   For more functionality, use either |MiniDiff| or fully featured Git client.
+---   For more functionality, use either |mini.diff| or fully featured Git client.
 ---
 --- Sources with more details:
 --- - |:Git|
@@ -42,7 +39,7 @@
 ---
 --- # Comparisons ~
 ---
---- - 'tpope/vim-fugitive':
+--- - [tpope/vim-fugitive](https://github.com/tpope/vim-fugitive):
 ---     - Mostly a dedicated Git client, while this module is not (by design).
 ---     - Provides buffer-local Git data only through fixed statusline component,
 ---       while this module has richer data in the form of a Lua table.
@@ -53,13 +50,13 @@
 ---       Also this module provides slightly different (usually richer)
 ---       completion suggestions.
 ---
---- - 'NeogitOrg/neogit':
+--- - [NeogitOrg/neogit](https://github.com/NeogitOrg/neogit):
 ---     - Similar to 'tpope/vim-fugitive', but without `:Git` command.
 ---
---- - 'lewis6991/gitsigns.nvim':
+--- - [lewis6991/gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim):
 ---     - Provides buffer-local Git data with emphasis on granular diff status,
 ---       while this module is more oriented towards repository and file level
----       data (root, HEAD, file status, etc.). Use |MiniDiff| for diff tracking.
+---       data (root, HEAD, file status, etc.). Use |mini.diff| for diff tracking.
 ---
 --- # Disabling ~
 ---
@@ -68,6 +65,7 @@
 --- different scenarios and customization intentions, writing exact rules for
 --- disabling module's functionality is left to user.
 --- See |mini.nvim-disabling-recipes| for common recipes.
+---@tag MiniGit
 
 --- # Statusline component ~
 ---
@@ -145,7 +143,7 @@
 ---   determined automatically based on the data Git itself provides.
 ---   Split window is made current after command execution.
 ---
----   Use split-related |command-modifiers| (|:vertical|, |:horizontal|, or |:tab|)
+---   Use split-related |:command-modifiers| (|:vertical|, |:horizontal|, or |:tab|)
 ---   to force output in a particular type of split. Default split direction is
 ---   controlled by `command.split` in |MiniGit.config|.
 ---
@@ -182,7 +180,9 @@
 ---   Like `:Git commit -m Hello\ world` and not `:Git commit -m 'Hello world'`
 ---   (which treats `'Hello` and `world'` as separate arguments).
 ---
----                                                         *MiniGit-command-events*
+--- # Events ~
+--- *MiniGit-command-events*
+---
 --- There are several `User` events triggered during command execution:
 ---
 --- - `MiniGitCommandDone` - after command is done executing. For Lua callbacks it
@@ -190,18 +190,17 @@
 ---     - <cmd_input> `(table)` - structured data about executed command.
 ---       Has same structure as Lua function input in |nvim_create_user_command()|.
 ---     - <cwd> `(string)` - directory path inside which Git command was executed.
----     - `<exit_code>` `(number)` - exit code of CLI process.
----     - `<git_command>` `(table)` - array with arguments of full executed command.
----     - `<git_subcommand>` `(string)` - detected Git subcommand (like "log", etc.).
----     - `<stderr>` `(string)` - `stderr` process output.
----     - `<stdout>` `(string)` - `stdout` process output.
+---     - <exit_code> `(number)` - exit code of CLI process.
+---     - <git_command> `(table)` - array with arguments of full executed command.
+---     - <git_subcommand> `(string)` - detected Git subcommand (like "log", etc.).
+---     - <stderr> `(string)` - `stderr` process output.
+---     - <stdout> `(string)` - `stdout` process output.
 ---
 --- - `MiniGitCommandSplit` - after command showed its output in a split. Triggered
 ---   after `MiniGitCommandDone` and provides similar `data` table with extra fields:
----     - `<win_source>` `(number)` - window identifier of "source" window (current at
+---     - <win_source> `(number)` - window identifier of "source" window (current at
 ---       the moment before command execution).
----     - `<win_stdout>` `(number)` - window identifier of command output.
----@tag MiniGit-command
+---     - <win_stdout> `(number)` - window identifier of command output.
 ---@tag :Git
 
 ---@alias __git_buf_id number Target buffer identifier. Default: 0 for current buffer.
@@ -259,9 +258,7 @@ MiniGit.setup = function(config)
 end
 
 --stylua: ignore
---- Module config
----
---- Default values:
+--- Defaults ~
 ---@eval return MiniDoc.afterlines_to_code(MiniDoc.current.eval_section)
 ---@text # Job ~
 ---
