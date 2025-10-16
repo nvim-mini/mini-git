@@ -386,16 +386,15 @@ MiniGit.show_diff_source = function(opts)
       lines = H.git_cli_output(args, cwd)
     end
     if #lines == 0 and not is_worktree then
-      return H.notify('Can not show ' .. path .. 'at commit ' .. commit, 'WARN')
+      return H.notify('Can not show ' .. path .. ' at commit ' .. commit, 'WARN')
     end
     H.show_in_split(mods, lines, 'show', table.concat(args, ' '))
   end
 
   local has_before_shown = false
   if target ~= 'after' then
-    -- "Before" file can be absend if hunk is from newly added file
     if src.path_before == nil then
-      H.notify('Could not find "before" file', 'WARN')
+      H.notify('No "before" as file was created', 'WARN')
     else
       show(src.commit_before, src.path_before, split)
       vim.api.nvim_win_set_cursor(0, { src.lnum_before, 0 })
@@ -404,9 +403,13 @@ MiniGit.show_diff_source = function(opts)
   end
 
   if target ~= 'before' then
-    local mods_after = has_before_shown and 'belowright vertical' or split
-    show(src.commit_after, src.path_after, mods_after)
-    vim.api.nvim_win_set_cursor(0, { src.lnum_after, 0 })
+    if src.path_after == nil then
+      H.notify('No "after" as file was deleted', 'WARN')
+    else
+      local mods_after = has_before_shown and 'belowright vertical' or split
+      show(src.commit_after, src.path_after, mods_after)
+      vim.api.nvim_win_set_cursor(0, { src.lnum_after, 0 })
+    end
   end
 end
 
@@ -1491,7 +1494,8 @@ H.diff_pos_to_source = function()
   -- Try fall back to inferring target commits from 'mini.git' buffer name
   if res.commit_before == nil or res.commit_after == nil then H.diff_parse_bufname(res) end
 
-  local all_present = res.lnum_after and res.path_after and res.commit_after
+  local all_present = (res.lnum_before and res.path_before and res.commit_before)
+    or (res.lnum_after and res.path_after and res.commit_after)
   local is_in_order = commit_lnum <= paths_lnum and paths_lnum <= hunk_lnum
   if not (all_present and is_in_order) then return nil end
 
@@ -1500,24 +1504,34 @@ end
 
 H.diff_parse_paths = function(out, lines, lnum)
   -- NOTE: with `diff.mnemonicPrefix=true` source and destination prefixes can
-  -- be not only `a` and `b`, but other characters
-  local pattern_before, pattern_after = '^%-%-%- [acio]/(.*)$', '^%+%+%+ [biw]/(.*)$'
+  -- be not only `a`/`b`, but other characters or none (if added/deleted file)
+  local pattern_before, pattern_after = '^%-%-%- ([acio]?)/(.*)$', '^%+%+%+ ([biw]?)/(.*)$'
 
   -- Allow placing cursor directly on path defining lines
   local cur_line = lines[lnum]
-  local path_before, path_after = string.match(cur_line, pattern_before), string.match(cur_line, pattern_after)
-  if path_before ~= nil or path_after ~= nil then
-    out.path_before = path_before or string.match(lines[lnum - 1] or '', pattern_before)
-    out.path_after = path_after or string.match(lines[lnum + 1] or '', pattern_after)
+  local prefix_before, path_before = string.match(cur_line, pattern_before)
+  local prefix_after, path_after = string.match(cur_line, pattern_after)
+  if path_before ~= nil then
+    out.path_before = path_before
+    prefix_after, out.path_after = string.match(lines[lnum + 1] or '', pattern_after)
+    out.lnum_before, out.lnum_after = 1, 1
+  elseif path_after ~= nil then
+    prefix_before, out.path_before = string.match(lines[lnum - 1] or '', pattern_before)
+    out.path_after = path_after
     out.lnum_before, out.lnum_after = 1, 1
   else
     -- Iterate lines upward to find path patterns
     while out.path_after == nil and lnum > 0 do
-      out.path_after = string.match(lines[lnum] or '', pattern_after)
+      prefix_after, out.path_after = string.match(lines[lnum] or '', pattern_after)
       lnum = lnum - 1
     end
-    out.path_before = string.match(lines[lnum] or '', pattern_before)
+    prefix_before, out.path_before = string.match(lines[lnum] or '', pattern_before)
   end
+
+  -- - Don't treat '--- /dev/null' and '+++ /dev/null' matches as paths
+  --   Need to check prefix to work in cases like '--- a/dev/null'
+  if prefix_before == '' then out.path_before = nil end
+  if prefix_after == '' then out.path_after = nil end
 
   return lnum
 end
