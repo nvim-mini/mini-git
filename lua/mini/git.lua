@@ -1499,7 +1499,9 @@ H.diff_pos_to_source = function()
 end
 
 H.diff_parse_paths = function(out, lines, lnum)
-  local pattern_before, pattern_after = '^%-%-%- a/(.*)$', '^%+%+%+ b/(.*)$'
+  -- NOTE: with `diff.mnemonicPrefix=true` source and destination prefixes can
+  -- be not only `a` and `b`, but other characters
+  local pattern_before, pattern_after = '^%-%-%- [acio]/(.*)$', '^%+%+%+ [biw]/(.*)$'
 
   -- Allow placing cursor directly on path defining lines
   local cur_line = lines[lnum]
