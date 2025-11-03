@@ -9,22 +9,24 @@ See more details in [Features](#features) and [Documentation](doc/mini-git.txt).
 > [!NOTE]
 > This was previously hosted at a personal `echasnovski` GitHub account. It was transferred to a dedicated organization to improve long term project stability. See more details [here](https://github.com/nvim-mini/mini.nvim/discussions/1970).
 
-⦿ This is a part of [mini.nvim](https://github.com/nvim-mini/mini.nvim) library. Please use [this link](https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-git.md) if you want to mention this module.
+⦿ This is a part of [mini.nvim](https://nvim-mini.org/mini.nvim) library. Please use [this link](https://nvim-mini.org/mini.nvim/readmes/mini-git) if you want to mention this module.
 
 ⦿ All contributions (issues, pull requests, discussions, etc.) are done inside of 'mini.nvim'.
 
-⦿ See the repository page to learn about common design principles and configuration recipes.
+⦿ See [whole library documentation](https://nvim-mini.org/mini.nvim/doc/mini-nvim) to learn about general design principles, disable/configuration recipes, and more.
+
+⦿ See [MiniMax](https://nvim-mini.org/MiniMax) for a full config example that uses this module.
 
 ---
 
-If you want to help this project grow but don't know where to start, check out [contributing guides of 'mini.nvim'](https://github.com/nvim-mini/mini.nvim/blob/main/CONTRIBUTING.md) or leave a Github star for 'mini.nvim' project and/or any its standalone Git repositories.
+If you want to help this project grow but don't know where to start, check out [contributing guides of 'mini.nvim'](https://nvim-mini.org/mini.nvim/CONTRIBUTING) or leave a Github star for 'mini.nvim' project and/or any its standalone Git repositories.
 
 ## Demo
 
 <!-- Demo source: https://github.com/nvim-mini/assets/blob/main/demo/demo-git.mp4 -->
 https://github.com/nvim-mini/mini.nvim/assets/24854248/3c2b34cd-f04f-4e30-9ca4-1ff51e2d65a2
 
-**Note**: This demo uses custom `vim.notify()` from [mini.notify](https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-notify.md) and diff line number highlighting from [mini.diff](https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-diff.md).
+**Note**: This demo uses custom `vim.notify()` from [mini.notify](https://nvim-mini.org/mini.nvim/readmes/mini-notify) and diff line number highlighting from [mini.diff](https://nvim-mini.org/mini.nvim/readmes/mini-diff).
 
 ## Features
 
@@ -39,7 +41,7 @@ https://github.com/nvim-mini/mini.nvim/assets/24854248/3c2b34cd-f04f-4e30-9ca4-1
 
 What it doesn't do:
 
-- Replace fully featured Git client. Rule of thumb: if feature does not rely on a state of current Neovim (opened buffers, etc.), it is out of scope. For more functionality, use either ['mini.diff'](https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-diff.md) or fully featured Git client.
+- Replace fully featured Git client. Rule of thumb: if feature does not rely on a state of current Neovim (opened buffers, etc.), it is out of scope. For more functionality, use either ['mini.diff'](https://nvim-mini.org/mini.nvim/readmes/mini-diff) or fully featured Git client.
 
 For more information see these parts of help:
 
@@ -60,7 +62,7 @@ There are two branches to install from:
 Here are code snippets for some common installation methods (use only one):
 
 <details>
-<summary>With <a href="https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-deps.md">mini.deps</a></summary>
+<summary>With <a href="https://nvim-mini.org/mini.nvim/readmes/mini-deps">mini.deps</a></summary>
 
 - 'mini.nvim' library:
 
